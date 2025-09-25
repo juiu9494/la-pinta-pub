@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Piazza - Bar & Pizzeria</title>
+    <style>
+        /* Styles généraux */
+        :root {
+            --primary: #8B4513;
+            --secondary: #D2691E;
+            --accent: #CD853F;
+            --light: #F5F5DC;
+            --dark: #2F2F2F;
+            --text: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2.5rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent);
+        }
+        
+        /* Sections générales */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Section Chi siamo */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Section Menu */
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .tab-btn.active {
+            border-bottom: 3px solid var(--secondary);
+            color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .menu-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .menu-item-content {
+            padding: 1.5rem;
+        }
+        
+        .menu-item-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .menu-item-title h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+        
+        .menu-item-price {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .menu-item-desc {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Section Contatti */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            color: var(--accent);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        h6{
+            margin-left: 95px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #8B4513;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #FFF8DC;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+
+        
+
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+            <img src="Logo_la_pinta-removebg-preview.png" width="250px">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#chi-siamo">Chi Siamo</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#contatti">Contatti</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Benvenuti a la pinta</h1>
+            <p>Scopri l'autenticità della pizza italiana e una selezione di bevande raffinate in un'atmosfera calorosa.</p>
+            <a href="#menu" class="btn">Vedi il menu</a>
+        </div>
+    </section>
+
+    <!-- Section Chi siamo -->
+    <section id="chi-siamo" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Chi Siamo</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="Logo_la_pinta-removebg-preview.png" alt="Interno del ristorante">
+                </div>
+                <div class="about-text">
+                    <h3>La nostra storia</h3>
+                    <p>Fondato nel 2005, La Piazza è rapidamente diventato un punto di riferimento per la cucina italiana autentica nella regione. La nostra passione per i sapori tradizionali e gli ingredienti freschi ci ha permesso di creare un'esperienza culinaria unica.</p>
+                    <p>Il nostro team di pizzaioli esperti prepara ogni pizza con cura, rispettando i metodi tradizionali della pizza napoletana. Il nostro bar offre una selezione accurata di vini, birre artigianali e cocktail creativi.</p>
+                    <p>Che veniate per una cena in famiglia, un appuntamento romantico o una serata tra amici, il nostro team si impegna a offrirvi un servizio eccezionale in un'atmosfera calorosa e accogliente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <h6 align="center"><img src="https://skins18.wincustomize.com/4/29/429077/8/56018/preview-8-56018.jpg" width="600px" left="650px"></h6>
+    <h6 align="center"><img src="Birra moretti.png" width="500px"></h6>
+
+    <!-- Section Menu -->
+    <section id="menu" class="menu">
+        <div class="container">
+            <div class="section-title">
+                <h2>Il Nostro Menu</h2>
+            </div>
+            <div class="menu-tabs">
+                <button class="tab-btn active" data-tab="pizze">Pizze</button>
+                <button class="tab-btn" data-tab="bevande">Bevande</button>
+            </div>
+    
+            
+            <div id="pizze" class="tab-content active">
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Margherita">
+                        <div class="menu-item-content">
+                            <div class="menu-item-title">
+                                <h3>Margherita</h3>
+                                <span class="menu-item-price">12,50€</span>
+                            </div>
+                            <p class="menu-item-desc">Salsa di pomodoro, mozzarella di bufala, basilico fresco, olio d'oliva extravergine.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://img.freepik.com/premium-photo/sensational-slices-pizza-photography-wonders_1036998-18520.jpg" alt="Quattro Stagioni">
+                        <div class="menu-item-content">
+                            <div class="menu-item-title">
+                                <h3>Quattro Stagioni</h3>
+                                <span class="menu-item-price">15,90€</span>
+                            </div>
+                            <p class="menu-item-desc">Salsa di pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive nere.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1595708684082-a173bb3a06c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Diavola">
+                        <div class="menu-item-content">
+                            <div class="menu-item-title">
+                                <h3>Diavola</h3>
+                                <span class="menu-item-price">14,50€</span>
+                            </div>
+                            <p class="menu-item-desc">Salsa di pomodoro, mozzarella, salame piccante, peperoncino, origano.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Quattro Formaggi">
+                        <div class="menu-item-content">
+                            <div class="menu-item-title">
+                                <h3>Quattro Formaggi</h3>
+                                <span class="menu-item-price">16,20€</span>
+                            </div>
+                            <p class="menu-item-desc">Mozzarella, gorgonzola, parmigiano, pecorino, panna fresca.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="bevande" class="tab-content">
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Vini Italiani">
+                        <div class="menu-item-content">
+                            <div class="menu-item-title">
+                                <h3>Vini Italiani</h3>
+                                <span class="menu-item-price">Da 5,50€</span>
+                            </div>
+                            <p class="menu-item-desc">Selezione di vini rossi, bianchi e rosati delle migliori regioni d'Italia.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cocktail Signature">
+                        <div class="menu-item-content">
+                            <div class="menu-item-title">
+                                <h3>Cocktail Signature</h3>
+                                <span class="menu-item-price">Da 9,90€</span>
+                            </div>
+                            <p class="menu-item-desc">Le nostre creazioni esclusive come lo "Spritz Piazza" o il "Negroni Romano".</p>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://tse4.mm.bing.net/th/id/OIP.gerQtiAtFnVXIKLYzne41AHaFM?rs=1&pid=ImgDetMain&o=7&rm=3">
+                        <div class="menu-item-content">
+                            <div class="menu-item-title">
+                                <h3>Birre Artigianali</h3>
+                                <span class="menu-item-price">Da 6,50€</span>
+                            </div>
+                            <p class="menu-item-desc">Selezione di birre locali e internazionali, alla spina e in bottiglia.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Digestivi Italiani">
+                        <div class="menu-item-content">
+                            <div class="menu-item-title">
+                                <h3>Digestivi Italiani</h3>
+                                <span class="menu-item-price">Da 7,00€</span>
+                            </div>
+                            
+                            <p class="menu-item-desc">Limoncello, Amaro, Grappa e altri distillati italiani tradizionali.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contatti -->
+    <section id="contatti" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contatti & Prenotazioni</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Informazioni di contatto</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <p>Via Rossini. 53 Castelfidardo</p>
+                            
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div>
+                            <p>+39 3661574330</p>
+                           
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🕒</div>
+                        <div>
+                            <p><strong>Lunedì - Sabato:</strong> 16:30 - 02:00</p>
+                            <p><strong>Domenica:</strong> Chiuso </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Prenota un tavolo</h3>
+                    <form>
+                        <input type="text" placeholder="Il tuo nome" required>
+                        <input type="email" placeholder="La tua email" required>
+                        <input type="tel" placeholder="Il tuo telefono" required>
+                        <input type="date" required>
+                        <input type="time" required>
+                        <input type="number" placeholder="Numero di persone" min="1" required>
+                        <textarea placeholder="Messaggio speciale (opzionale)"></textarea>
+                        <button type="submit" class="btn">Prenota a la pinta </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>La pinta</h3>
+                    <p>La tua destinazione per un'esperienza autentica della cucina italiana e bevande raffinate in un'atmosfera calorosa.</p>
+                <div class="footer-section">
+                    <h3>Link rapidi</h3>
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#chi-siamo">Chi Siamo</a></li>
+                            <li><a href="#menu">Menu</a></li>
+                            <li><a href="#contatti">Contatti</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Orari di apertura</h3>
+                    <p>Lunedi-sabato: 16:30 - 02:00</p>
+                    <p>Domenica: Chiuso </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 La pinta - Bar & Pizzeria. Tutti i diritti riservati.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigazione fluida
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Sistema di schede per il menu
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Rimuovere la classe active da tutti i pulsanti e contenuti
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Aggiungere la classe active al pulsante cliccato
+                btn.classList.add('active');
+                
+                // Mostrare il contenuto corrispondente
+                const tabId = btn.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Animazione allo scorrimento
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Applicare l'animazione agli elementi
+        document.querySelectorAll('.menu-item, .about-content > div, .contact-container > div').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
